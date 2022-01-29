@@ -24,6 +24,9 @@ public struct ScanResult {
     
     /// The type of code that was matched.
     public let type: VNBarcodeSymbology
+    
+    /// Bounding box for scanned code
+    public let boundingBox: CGRect
 }
 
 public struct FastCodeScannerView: UIViewControllerRepresentable {

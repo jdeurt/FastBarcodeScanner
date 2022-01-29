@@ -40,7 +40,8 @@ extension FastCodeScannerView {
                         self.found(
                             ScanResult(
                                 string: String(data: data, encoding: .utf8)!,
-                                type: bestResult.symbology
+                                type: bestResult.symbology,
+                                boundingBox: bestResult.boundingBox
                             )
                         )
                         
