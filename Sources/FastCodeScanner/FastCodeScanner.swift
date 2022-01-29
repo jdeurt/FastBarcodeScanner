@@ -15,6 +15,8 @@ public enum ScanError: Error {
     case initError(_ error: Error)
 }
 
+public typealias CodeBoundingBox = CGRect
+
 /// The result from a successful scan: the string that was scanned, and also the type of data that was found.
 /// The type is useful for times when you've asked to scan several different code types at the same time, because
 /// it will report the exact code type that was found.
@@ -26,7 +28,7 @@ public struct ScanResult {
     public let type: VNBarcodeSymbology
     
     /// Bounding box for scanned code
-    public let boundingBox: CGRect
+    public let boundingBox: CodeBoundingBox
 }
 
 public struct FastCodeScannerView: UIViewControllerRepresentable {
