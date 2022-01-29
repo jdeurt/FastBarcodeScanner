@@ -1,10 +1,3 @@
-//
-//  File.swift
-//  
-//
-//  Created by Juan de Urtubey on 1/28/22.
-//
-
 import Vision
 import AVFoundation
 import Foundation
