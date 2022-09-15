@@ -76,7 +76,7 @@ extension FastCodeScannerView {
             }
             
             if (parent.isScanning) {
-                let imageRequestHandler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer, orientation: .right, options: requestOptions)
+                let imageRequestHandler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer, orientation: .left, options: requestOptions)
                 try? imageRequestHandler.perform([self.detectBarcodeRequest])
             }
         }
