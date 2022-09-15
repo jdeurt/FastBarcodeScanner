@@ -27,6 +27,9 @@ public struct ScanResult {
     /// The type of code that was matched.
     public let type: VNBarcodeSymbology
     
+    /// The confidence level of the result
+    public let confidence: VNConfidence
+    
     /// Bounding box for scanned code
     public let boundingBox: CodeBoundingBox
 }
@@ -36,6 +39,7 @@ public struct FastCodeScannerView: UIViewControllerRepresentable {
     @Binding var isScanning: Bool
 
     public let codeTypes: [VNBarcodeSymbology]
+    public let minimumConfidence: VNConfidence
     // public let scanInterval: Double
     public var isTorchOn: Bool
     public var videoCaptureDevice: AVCaptureDevice?
@@ -44,12 +48,14 @@ public struct FastCodeScannerView: UIViewControllerRepresentable {
     public init(
         isScanning: Binding<Bool>,
         codeTypes: [VNBarcodeSymbology],
+        minimumConfidence: VNConfidence = 0.9,
         isTorchOn: Bool = false,
         videoCaptureDevice: AVCaptureDevice? = AVCaptureDevice.default(for: .video),
         action: @escaping (Result<ScanResult, ScanError>) -> Void
     ) {
         self._isScanning = isScanning
         self.codeTypes = codeTypes
+        self.minimumConfidence = minimumConfidence
         self.isTorchOn = isTorchOn
         self.videoCaptureDevice = videoCaptureDevice
         self.action = action

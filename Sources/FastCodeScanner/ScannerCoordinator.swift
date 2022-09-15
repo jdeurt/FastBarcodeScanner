@@ -25,23 +25,35 @@ extension FastCodeScannerView {
         }()
         
         lazy var detectBarcodeRequest: VNDetectBarcodesRequest = {
-            return VNDetectBarcodesRequest(completionHandler: { (request, error) in
+            let request =  VNDetectBarcodesRequest(completionHandler: { (request, error) in
                 guard error == nil else { return }
+                
                 self.processClassification(for: request)
             })
+            
+            request.symbologies = parent.codeTypes
+            
+            return request
         }()
         
         private func processClassification(for request: VNRequest) {
             DispatchQueue.main.async {
                 if let bestResult = request.results?.first as? VNBarcodeObservation,
                    let payload = bestResult.payloadStringValue {
-                    if (self.parent.codeTypes.contains(bestResult.symbology) && bestResult.confidence >= 0.9) {
+                    if (bestResult.confidence >= self.parent.minimumConfidence) {
                         guard let data = payload.data(using: .utf8) else { return }
+                        
                         self.found(
                             ScanResult(
                                 string: String(data: data, encoding: .utf8)!,
                                 type: bestResult.symbology,
-                                boundingBox: bestResult.boundingBox
+                                confidence: bestResult.confidence,
+                                boundingBox: CGRect(
+                                    x: bestResult.topLeft.x,
+                                    y: bestResult.topLeft.y,
+                                    width: bestResult.topRight.x - bestResult.topLeft.x,
+                                    height: bestResult.bottomLeft.y - bestResult.topLeft.y
+                                )
                             )
                         )
                         
