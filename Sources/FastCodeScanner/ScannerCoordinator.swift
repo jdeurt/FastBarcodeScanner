@@ -48,12 +48,7 @@ extension FastCodeScannerView {
                                 string: String(data: data, encoding: .utf8)!,
                                 type: bestResult.symbology,
                                 confidence: bestResult.confidence,
-                                boundingBox: CGRect(
-                                    x: bestResult.topLeft.x,
-                                    y: bestResult.topLeft.y,
-                                    width: bestResult.topRight.x - bestResult.topLeft.x,
-                                    height: bestResult.bottomLeft.y - bestResult.topLeft.y
-                                )
+                                boundingBox: bestResult.boundingBox
                             )
                         )
                         
